@@ -2,64 +2,61 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Wild Robot — Reading Adventure</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>The Wild Robot — Year 2/3 Reading Adventure</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
-* { box-sizing:border-box; margin:0; padding:0; }
-body {
-  --paper:#FFF8EC; --ink:#2C3A3F; --robot:#5E8B9E; --leaf:#4FB477; --sun:#FFC34D;
-  --coral:#FF7A59; --mist:#E7F0F2;
-  font-family:'Nunito','Segoe UI',system-ui,sans-serif; color:var(--ink); min-height:100vh; padding:24px 16px 56px;
-  background:
-    radial-gradient(1100px 480px at 85% -12%, #DCEBE6 0%, transparent 60%),
-    radial-gradient(900px 480px at -10% 112%, #FBE6CF 0%, transparent 55%), var(--paper);
-}
-.wrap { max-width:740px; margin:0 auto; }
-.hero { text-align:center; }
-.robot { font-size:52px; }
-.title { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:32px; line-height:1.1; margin-top:6px; }
-.by { font-weight:700; opacity:.55; font-size:15px; }
-.chips { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:14px 0 20px; }
-.chip { background:#fff; border-radius:999px; padding:6px 13px; font-size:13px; font-weight:800; box-shadow:0 3px 0 rgba(44,58,63,.07); }
-.namewrap { display:flex; justify-content:center; margin-bottom:18px; }
-.namewrap input { border:3px solid #EADFC9; border-radius:14px; padding:10px 14px; font-family:'Nunito',sans-serif; font-weight:700; font-size:15px; text-align:center; }
-.namewrap input:focus { outline:none; border-color:var(--robot); }
-.card { background:#fff; border-radius:22px; padding:18px; box-shadow:0 8px 0 rgba(44,58,63,.07); margin-bottom:16px; }
-.card h3 { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:18px; margin-bottom:10px; }
-.steps { display:grid; gap:8px; }
-.step { display:flex; gap:10px; align-items:flex-start; font-weight:600; font-size:15px; }
-.step b { font-family:'Baloo 2',sans-serif; }
-.prog { background:#fff; border-radius:18px; padding:14px 16px; box-shadow:0 6px 0 rgba(44,58,63,.07); margin-bottom:18px; }
-.prog-top { display:flex; justify-content:space-between; align-items:center; font-family:'Baloo 2',sans-serif; font-weight:800; margin-bottom:10px; }
-.bar { height:14px; background:#EAF1F2; border-radius:999px; overflow:hidden; }
-.bar > div { height:100%; background:linear-gradient(90deg,var(--leaf),var(--sun)); transition:width .4s; }
-.badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
-.badge { font-size:12px; font-weight:800; padding:5px 10px; border-radius:999px; background:#EEE; color:#999; }
-.badge.on { background:#FFF2D6; color:#B7791F; }
-.sess { background:#fff; border-radius:20px; box-shadow:0 6px 0 rgba(44,58,63,.07); margin-bottom:12px; overflow:hidden; border:3px solid #fff; }
-.sess.done { border-color:var(--leaf); }
-.sess-head { display:flex; align-items:center; gap:12px; padding:15px 16px; cursor:pointer; }
-.num { width:38px; height:38px; flex:none; border-radius:12px; background:var(--mist); color:var(--robot); font-family:'Baloo 2',sans-serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; }
-.sess.done .num { background:var(--leaf); color:#fff; }
-.meta { flex:1; min-width:0; }
-.meta .t { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; }
-.meta .c { font-weight:700; font-size:13px; opacity:.55; }
-.caret { font-size:13px; opacity:.4; }
-.body { padding:0 16px 16px; }
-.label { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--robot); margin:14px 0 6px; }
-.q { font-weight:700; font-size:15px; line-height:1.5; margin-bottom:7px; padding-left:18px; position:relative; }
-.q:before { content:"💬"; position:absolute; left:0; font-size:13px; }
-.word { display:inline-block; background:#FFF2D6; color:#B7791F; font-weight:800; padding:5px 12px; border-radius:10px; font-size:15px; }
-.act { font-weight:600; font-size:15px; background:var(--mist); padding:12px 14px; border-radius:12px; line-height:1.45; }
-.mark { margin-top:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
-.mark span { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; }
-.star { font-size:30px; cursor:pointer; background:none; border:none; line-height:1; filter:grayscale(1) opacity(.4); transition:.12s; }
-.star.lit { filter:none; transform:scale(1.05); }
-.undo { margin-left:auto; border:none; background:#F3EEE3; color:var(--ink); font-family:'Baloo 2',sans-serif; font-weight:700; border-radius:10px; padding:7px 12px; cursor:pointer; font-size:13px; }
-.reset { display:block; margin:26px auto 0; border:none; background:none; color:#B9AE99; font-weight:700; font-size:13px; cursor:pointer; text-decoration:underline; }
-.note { text-align:center; font-size:12px; color:#B9AE99; font-weight:700; margin-top:16px; line-height:1.5; }
-@media print { .reset, .caret { display:none; } .sess .body { display:block !important; } body { background:#fff; } }
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap");
+*{box-sizing:border-box;margin:0;padding:0}
+body{--paper:#FFF8EC;--ink:#2C3A3F;--robot:#5E8B9E;--leaf:#4FB477;--sun:#FFC34D;--coral:#FF7A59;--bark:#8A6E52;--mist:#E7F0F2;
+font-family:"Nunito",sans-serif;color:var(--ink);min-height:100%;padding:24px 16px 56px;
+background:radial-gradient(1100px 480px at 85% -12%,#DCEBE6 0%,transparent 60%),
+radial-gradient(900px 480px at -10% 112%,#FBE6CF 0%,transparent 55%),var(--paper);}
+.wrap{max-width:740px;margin:0 auto}
+.hero{text-align:center;margin-bottom:8px}
+.robot{font-size:52px;line-height:1}
+.title{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:30px;line-height:1.1;margin-top:6px}
+.by{font-weight:700;opacity:.55;font-size:15px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:14px 0 20px}
+.chip{background:#fff;border-radius:999px;padding:6px 13px;font-size:13px;font-weight:800;box-shadow:0 3px 0 rgba(44,58,63,.07)}
+.namewrap{display:flex;justify-content:center;margin-bottom:18px}
+.namewrap input{border:3px solid #EADFC9;border-radius:14px;padding:10px 14px;font-family:"Nunito",sans-serif;font-weight:700;font-size:15px;text-align:center}
+.namewrap input:focus{outline:none;border-color:var(--robot)}
+.card{background:#fff;border-radius:22px;padding:18px;box-shadow:0 8px 0 rgba(44,58,63,.07);margin-bottom:16px}
+.card h3{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:18px;margin-bottom:10px}
+.steps{display:grid;gap:8px}
+.step{display:flex;gap:10px;align-items:flex-start;font-weight:600;font-size:15px}
+.prog{background:#fff;border-radius:18px;padding:14px 16px;box-shadow:0 6px 0 rgba(44,58,63,.07);margin-bottom:18px}
+.prog-top{display:flex;justify-content:space-between;align-items:center;font-family:"Baloo 2",sans-serif;font-weight:800;margin-bottom:10px}
+.bar{height:14px;background:#EAF1F2;border-radius:999px;overflow:hidden}
+.bar>div{height:100%;background:linear-gradient(90deg,var(--leaf),var(--sun));transition:width .4s}
+.badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.badge{font-size:12px;font-weight:800;padding:5px 10px;border-radius:999px;background:#EEE;color:#999}
+.badge.on{background:#FFF2D6;color:#B7791F}
+.sess{background:#fff;border-radius:20px;box-shadow:0 6px 0 rgba(44,58,63,.07);margin-bottom:12px;overflow:hidden;border:3px solid #fff}
+.sess.done{border-color:var(--leaf)}
+.sess-head{display:flex;align-items:center;gap:12px;padding:15px 16px;cursor:pointer}
+.num{width:38px;height:38px;flex:none;border-radius:12px;background:var(--mist);color:var(--robot);font-family:"Baloo 2",sans-serif;font-weight:800;font-size:18px;display:flex;align-items:center;justify-content:center}
+.sess.done .num{background:var(--leaf);color:#fff}
+.meta{flex:1;min-width:0}
+.meta .t{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:18px}
+.meta .c{font-weight:700;font-size:13px;opacity:.55}
+.caret{font-size:13px;opacity:.4}
+.body{padding:0 16px 16px}
+.label{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--robot);margin:14px 0 8px}
+.q{font-weight:700;font-size:15px;line-height:1.5;margin-bottom:7px;padding-left:20px;position:relative}
+.q:before{content:"💬";position:absolute;left:0;font-size:13px}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:4px}
+.wcard{background:#FFF2D6;border-radius:12px;padding:8px 12px}
+.wcard .w{font-family:"Baloo 2",sans-serif;font-weight:800;font-size:16px;color:#B7791F}
+.wcard .d{font-size:13px;font-weight:600;color:#6B5500;margin-top:2px}
+.act{font-weight:600;font-size:15px;background:var(--mist);padding:12px 14px;border-radius:12px;line-height:1.45}
+.mark{margin-top:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.mark span{font-family:"Baloo 2",sans-serif;font-weight:700;font-size:15px}
+.star{font-size:30px;cursor:pointer;background:none;border:none;line-height:1;filter:grayscale(1) opacity(.4);transition:.12s}
+.star.lit{filter:none;transform:scale(1.05)}
+.undo{margin-left:auto;border:none;background:#F3EEE3;color:var(--ink);font-family:"Baloo 2",sans-serif;font-weight:700;border-radius:10px;padding:7px 12px;cursor:pointer;font-size:13px}
+.reset{display:block;margin:26px auto 0;border:none;background:none;color:#B9AE99;font-weight:700;font-size:13px;cursor:pointer;text-decoration:underline}
+.note{text-align:center;font-size:12px;color:#B9AE99;font-weight:700;margin-top:16px;line-height:1.5}
 </style>
 </head>
 <body>
@@ -67,162 +64,276 @@ body {
   <div class="hero">
     <div class="robot">🤖🌿</div>
     <div class="title" id="title">The Wild Robot</div>
-    <div class="by">A reading adventure by Peter Brown</div>
+    <div class="by">A Year 2/3 reading adventure &bull; Peter Brown</div>
   </div>
   <div class="chips">
     <span class="chip">📖 80 short chapters</span>
-    <span class="chip">🎯 Grades 3–7</span>
-    <span class="chip">⏱ ~4 weeks</span>
-    <span class="chip">🔊 Great read-aloud</span>
+    <span class="chip">🎯 Year 2 &amp; 3</span>
+    <span class="chip">⏱ 20 nights &bull; ~4 weeks</span>
+    <span class="chip">🔊 Best read aloud together</span>
   </div>
   <div class="namewrap"><input id="name" placeholder="Type your name to start…" maxlength="20"></div>
-
   <div class="card">
     <h3>How each reading night works 🌙</h3>
     <div class="steps">
-      <div class="step"><span>🔊</span><div><b>Listen.</b> A grown-up reads tonight's chapters aloud.</div></div>
-      <div class="step"><span>📖</span><div><b>Your turn.</b> You read a favorite page back out loud.</div></div>
-      <div class="step"><span>💬</span><div><b>Talk about it.</b> Answer the questions together — no wrong answers.</div></div>
-      <div class="step"><span>✨</span><div><b>Word + activity.</b> Learn one new word and do the tiny activity.</div></div>
-      <div class="step"><span>⭐</span><div><b>Mark it.</b> Give the night stars and unlock the next adventure.</div></div>
+      <div class="step"><span>🔊</span><div><b>Listen.</b> A grown-up reads 4 short chapters aloud.</div></div>
+      <div class="step"><span>📖</span><div><b>Your turn.</b> Read your favourite page back out loud.</div></div>
+      <div class="step"><span>💬</span><div><b>Talk about it.</b> Chat through the questions — no wrong answers!</div></div>
+      <div class="step"><span>✨</span><div><b>Word time.</b> Learn 3 new words from tonight's chapters.</div></div>
+      <div class="step"><span>🎨</span><div><b>Activity.</b> One quick fun thing to do together.</div></div>
+      <div class="step"><span>⭐</span><div><b>Mark it.</b> Give the night stars and unlock the next one.</div></div>
     </div>
   </div>
-
   <div class="prog">
-    <div class="prog-top"><span id="count">0 of 16 adventures</span><span id="pct">0%</span></div>
+    <div class="prog-top"><span id="count">0 of 20 nights</span><span id="pct">0%</span></div>
     <div class="bar"><div id="barfill" style="width:0%"></div></div>
     <div class="badges" id="badges"></div>
   </div>
-
   <div id="sessions"></div>
-
   <button class="reset" id="reset">Start the adventure over</button>
-  <p class="note">
-    Chapter ranges are a suggested pace — read faster or slower to suit your reader.<br>
-    Made for a book your family owns. The questions and activities are original; the book's own words stay in the book. 📚
-  </p>
+  <p class="note">Chapter ranges are a suggested pace — go faster or slower to suit your reader.<br>
+  Questions and activities are original. The book&#39;s own words stay in the book. 📚</p>
 </div>
-
 <script>
-const STORE_KEY = "wildrobot:progress";
-const SESSIONS = [
-  {id:1,ch:"Chapters 1–5",title:"Waking up alone",word:"survive",
-   q:["Roz wakes up all alone in a strange place. Have you ever felt lost or unsure what to do?","Why do you think the animals are afraid of Roz at first?","What is one thing Roz does to try to stay safe?"],
-   act:"Draw the wild island the way you picture it in your head."},
-  {id:2,ch:"Chapters 6–10",title:"Learning the island",word:"instinct",
-   q:["Roz watches the animals very carefully. Why is watching a good way to learn?","What's something Roz figures out just by paying attention?","If you woke up somewhere brand new, what would you want to learn first?"],
-   act:"Watch a real animal (a pet or a bird outside) for two minutes, then tell someone what it did."},
-  {id:3,ch:"Chapters 11–15",title:"Talking with the animals",word:"communicate",
-   q:["How do things change for Roz once she can talk with the animals?","Why do you think the animals start to trust her a little more?","If you could understand one animal's language, which would you pick?"],
-   act:"Invent three hand signals so you can 'talk' to someone without saying a word."},
-  {id:4,ch:"Chapters 16–20",title:"An accident and a lonely egg",word:"responsibility",
-   q:["Accidents happen even when we don't mean them. How does Roz handle a big mistake?","Why does that one lonely egg matter so much?","What would you do if you found something small that needed taking care of?"],
-   act:"Take care of one small thing today — water a plant or feed a pet — and notice how it feels."},
-  {id:5,ch:"Chapters 21–25",title:"A new little one",word:"adopt",
-   q:["A baby goose decides Roz is its mother! How do you think Roz feels about that?","What are some things a good parent or caregiver does?","Who takes care of you, and how do they show it?"],
-   act:"Draw Roz and her gosling together."},
-  {id:6,ch:"Chapters 26–30",title:"Learning to be a parent",word:"patient",
-   q:["Roz isn't sure how to be a mom at first. How does she learn?","What's something hard that you got better at by trying again and again?","Why is it okay not to be perfect at something new?"],
-   act:"Try something tricky three times tonight — and don't give up."},
-  {id:7,ch:"Chapters 31–35",title:"Building a home",word:"shelter",
-   q:["What makes a place feel like 'home'?","How does Roz make the island feel safer and cozier?","Where is your favorite cozy spot at home?"],
-   act:"Build a little fort or a cozy reading nook to read tonight's chapters in."},
-  {id:8,ch:"Chapters 36–40",title:"Friends on the island",word:"community",
-   q:["Roz becomes friends with very different animals. Why is it good to have different kinds of friends?","Which animal friend would you most want, and why?","What's one way you make a new friend?"],
-   act:"Do one kind thing for a friend or a brother or sister today."},
-  {id:9,ch:"Chapters 41–45",title:"Learning to fly",word:"courage",
-   q:["Brightbill has to learn something scary and important. How does Roz help him?","Was there something scary you learned to do, like riding a bike or swimming?","Why do we sometimes have to do scary things to grow?"],
-   act:"Flap your arms and 'fly' around the room like a goose learning to take off."},
-  {id:10,ch:"Chapters 46–50",title:"Growing up",word:"independent",
-   q:["Brightbill is getting bigger and braver. How do you think that makes Roz feel?","What can you do now that you couldn't do when you were little?","Why is growing up exciting AND a little bit sad?"],
-   act:"Do one whole task all by yourself today, start to finish."},
-  {id:11,ch:"Chapters 51–55",title:"The big journey",word:"migrate",
-   q:["The geese must fly far away for winter. Why is that hard for Roz and Brightbill?","Have you ever had to say goodbye to someone for a while?","How can you stay close to someone even when they're far away?"],
-   act:"Trace a long journey across a map or a drawing with your finger."},
-  {id:12,ch:"Chapters 56–60",title:"Surviving the winter",word:"endure",
-   q:["Winter is dangerous on the island. How do the animals help each other through it?","When has someone helped you during a hard time?","Why is helping each other so important?"],
-   act:"Wrap up in a warm blanket and imagine how cold the island feels."},
-  {id:13,ch:"Chapters 61–65",title:"The whole island together",word:"belong",
-   q:["So many animals come together now. How have things changed since chapter 1?","Roz was once feared, and now she matters to everyone. How did that happen?","How do you think Roz has changed on the inside?"],
-   act:"Name three ways Roz is different now from the very first chapter."},
-  {id:14,ch:"Chapters 66–70",title:"Something is coming",word:"predict",
-   q:["The story starts to feel tense. What are you worried might happen?","What does Brightbill mean to Roz by now?","Make a prediction: what do you think happens next?"],
-   act:"Say or write down your prediction, then check it after you finish."},
-  {id:15,ch:"Chapters 71–75",title:"Visitors arrive",word:"protect",
-   q:["Unexpected visitors come to the island. How do Roz and the animals react?","Why do you think the animals want to protect Roz?","What would you do to protect someone you love?"],
-   act:"Talk about who you would protect, and why."},
-  {id:16,ch:"Chapters 76–80",title:"Roz's brave choice",word:"sacrifice",
-   q:["Roz makes a big, brave decision at the end. What do you think of her choice?","How did the island change Roz? And how did Roz change the island?","If you could ask Roz one question, what would it be?"],
-   act:"Draw your favorite moment from the whole book — then maybe start The Wild Robot Escapes!"}
+const STORE="wildrobot:progress";
+const MILESTONES={5:"🌱 Just Getting Started",10:"🪺 Halfway Through",15:"🍂 Almost There",20:"🤖 Wild Robot Champion"};
+const SESSIONS=[
+{id:1,ch:"Chapters 1–4",title:"Roz Wakes Up",
+ words:[{w:"strange",d:"unusual or surprising — not what you expect"},
+        {w:"island",d:"a piece of land with water all around it"},
+        {w:"machine",d:"a device built to do a job using power"}],
+ q:["Roz wakes up alone on a wild island. How do you think she feels?",
+    "Why do you think the animals are scared of Roz?",
+    "What does Roz need to figure out first to stay safe?"],
+ act:"Draw the wild island the way you picture it in your head."},
+{id:2,ch:"Chapters 5–8",title:"The Animals Run Away",
+ words:[{w:"frightened",d:"very scared of something"},
+        {w:"enormous",d:"extremely big — much bigger than normal"},
+        {w:"curious",d:"wanting to find out more about something"}],
+ q:["Why do the animals run away from Roz?",
+    "Have you ever been scared of something that turned out to be harmless?",
+    "What do you think the animals believe Roz is?"],
+ act:"Act out being an animal seeing Roz for the very first time!"},
+{id:3,ch:"Chapters 9–12",title:"Watching and Learning",
+ words:[{w:"observe",d:"to watch something very carefully to learn about it"},
+        {w:"silent",d:"making no sound at all — completely quiet"},
+        {w:"discover",d:"to find or learn something for the first time"}],
+ q:["How does Roz learn about the island and its animals?",
+    "Why is watching quietly such a good way to learn?",
+    "What is something YOU have learnt just by watching?"],
+ act:"Sit quietly outside for 2 minutes — write down 5 things you notice."},
+{id:4,ch:"Chapters 13–16",title:"Finding a Voice",
+ words:[{w:"language",d:"the words and sounds a group uses to talk to each other"},
+        {w:"mimic",d:"to copy the way someone else speaks or moves"},
+        {w:"understand",d:"to know what something means"}],
+ q:["How does Roz learn to talk with the animals?",
+    "Why is it hard to learn to speak a new language?",
+    "If you could talk to any animal, which would you pick — and why?"],
+ act:"Invent your own animal language with 5 words and teach it to someone."},
+{id:5,ch:"Chapters 17–20",title:"A Terrible Accident",
+ words:[{w:"accident",d:"something bad that happens without meaning it to"},
+        {w:"desperate",d:"feeling like you will try anything because you are so worried"},
+        {w:"guilty",d:"feeling bad because you know you did something wrong"}],
+ q:["What happens in Roz's terrible accident?",
+    "How do you think Roz feels about what happened?",
+    "Have you ever done something by accident that hurt someone? What did you do?"],
+ act:"Think of a mistake you once made — what did you do to make things better?"},
+{id:6,ch:"Chapters 21–24",title:"The Lone Egg",
+ words:[{w:"precious",d:"very special and important — something you care about deeply"},
+        {w:"abandoned",d:"left all alone with nobody to care for it"},
+        {w:"protect",d:"to keep someone or something safe from harm"}],
+ q:["Why does Roz decide to look after the lone egg?",
+    "What makes something precious to you?",
+    "If YOU found a lone egg in the wild, what would you do?"],
+ act:"Make a small nest using leaves, sticks or paper and put something precious inside it."},
+{id:7,ch:"Chapters 25–28",title:"Brightbill Hatches!",
+ words:[{w:"gosling",d:"a baby goose"},
+        {w:"instinct",d:"something an animal knows how to do without being taught"},
+        {w:"imprint",d:"when a baby animal decides the first creature it sees is its parent"}],
+ q:["What does Brightbill think when he first sees Roz?",
+    "What is an instinct — can you think of an example?",
+    "What is the first important thing Brightbill needs to learn?"],
+ act:"Draw Brightbill and Roz meeting for the very first time."},
+{id:8,ch:"Chapters 29–32",title:"Learning to be a Mum",
+ words:[{w:"exhausted",d:"extremely tired — as if you have no energy left at all"},
+        {w:"patient",d:"able to wait or keep trying without getting frustrated"},
+        {w:"stubborn",d:"refusing to change your mind even when things are hard"}],
+ q:["Why is it so hard for Roz to look after Brightbill?",
+    "What does Roz do when parenting gets really tricky?",
+    "Who helps YOU when something feels too hard?"],
+ act:"Try something tricky 5 times in a row without giving up — notice how it feels."},
+{id:9,ch:"Chapters 33–36",title:"Building a Home",
+ words:[{w:"shelter",d:"a place that keeps you safe and protected from the weather"},
+        {w:"territory",d:"an area that an animal treats as its own space"},
+        {w:"cosy",d:"warm, comfortable and safe — a nice place to be"}],
+ q:["What makes a place feel like home?",
+    "How does Roz make the island safer and cosier for Brightbill?",
+    "Where is YOUR favourite cosy spot?"],
+ act:"Build a cosy reading den — then read the next session inside it!"},
+{id:10,ch:"Chapters 37–40",title:"Making Friends",
+ words:[{w:"trust",d:"believing that someone is good and will not hurt you"},
+        {w:"different",d:"not the same as others around you"},
+        {w:"accept",d:"to welcome someone just as they are, even if they are not like you"}],
+ q:["Why do the animals slowly start to trust Roz?",
+    "What does it mean to accept someone who is different from you?",
+    "Who was a friend you had to get to know slowly?"],
+ act:"Do one kind thing today for someone you do not know very well."},
+{id:11,ch:"Chapters 41–44",title:"Brightbill Grows Up",
+ words:[{w:"awkward",d:"feeling clumsy or uncomfortable — not sure what to do"},
+        {w:"embarrassed",d:"feeling ashamed or uncomfortable about something"},
+        {w:"determined",d:"having made up your mind to do something no matter what"}],
+ q:["Why is Brightbill embarrassed about Roz?",
+    "How do you think Roz feels about that?",
+    "Have you ever felt embarrassed about something — what helped you feel better?"],
+ act:"Draw Brightbill and Roz side by side — show how each of them is feeling."},
+{id:12,ch:"Chapters 45–48",title:"Learning to Fly",
+ words:[{w:"courage",d:"the strength to do something even when you are afraid"},
+        {w:"attempt",d:"to try to do something, especially something hard"},
+        {w:"persevere",d:"to keep trying even when something is really difficult"}],
+ q:["Flying is scary for Brightbill — why does Roz push him to try anyway?",
+    "Why do we sometimes need to do scary things to grow?",
+    "What is something brave YOU have done?"],
+ act:"Try one thing you have been putting off because it felt too scary or hard."},
+{id:13,ch:"Chapters 49–52",title:"Time to Migrate",
+ words:[{w:"migrate",d:"to travel a long distance to a different place for a season"},
+        {w:"flock",d:"a group of birds travelling or living together"},
+        {w:"farewell",d:"a goodbye — especially one when you are going away for a long time"}],
+ q:["Why do the geese have to fly south for winter?",
+    "How does Roz feel watching Brightbill fly away with the flock?",
+    "Have you ever had to say goodbye to someone you love — how did it feel?"],
+ act:"Write or draw a goodbye card to someone you miss."},
+{id:14,ch:"Chapters 53–56",title:"The Long Winter",
+ words:[{w:"harsh",d:"very difficult and unpleasant — hard to cope with"},
+        {w:"survive",d:"to stay alive through something dangerous or difficult"},
+        {w:"endure",d:"to put up with something very hard for a long time"}],
+ q:["How does Roz get through winter all alone without Brightbill?",
+    "What do the island animals do to help each other survive?",
+    "When has someone helped YOU through a really hard or sad time?"],
+ act:"Make a warm drink and imagine sitting outside in freezing cold — brrr! ☃️"},
+{id:15,ch:"Chapters 57–60",title:"The Island Community",
+ words:[{w:"community",d:"a group of people or animals who live together and help each other"},
+        {w:"depend",d:"to rely on someone — to need them to help you"},
+        {w:"belong",d:"to feel comfortable and accepted in a group or place"}],
+ q:["How has the island changed since the very first chapter?",
+    "What does it mean to belong somewhere?",
+    "Where do YOU feel like you belong most?"],
+ act:"Draw a map of your community — home, school, friends — with lines connecting everyone."},
+{id:16,ch:"Chapters 61–64",title:"Brightbill Returns",
+ words:[{w:"reunion",d:"a happy meeting after being apart for a long time"},
+        {w:"grateful",d:"feeling thankful for something good that has happened"},
+        {w:"changed",d:"different from how something or someone used to be"}],
+ q:["How have both Roz and Brightbill changed since chapter 1?",
+    "What do you think Brightbill feels when he sees Roz again?",
+    "What is the best reunion YOU have ever had?"],
+ act:"Write a short letter from Brightbill to Roz about what he saw on his journey south."},
+{id:17,ch:"Chapters 65–68",title:"Something is Coming",
+ words:[{w:"tension",d:"a worried, uneasy feeling — like something bad might happen"},
+        {w:"warning",d:"a sign that tells you danger might be on the way"},
+        {w:"predict",d:"to guess what will happen before it actually does"}],
+ q:["Does the mood feel different in these chapters — can you describe it?",
+    "What do you think is about to happen?",
+    "What would YOU do to protect someone you love?"],
+ act:"Write down your prediction — then check if you were right after finishing!"},
+{id:18,ch:"Chapters 69–72",title:"The Battle",
+ words:[{w:"battle",d:"a big, serious fight between two sides"},
+        {w:"fierce",d:"very strong, wild and dangerous"},
+        {w:"defend",d:"to protect someone or something from attack"}],
+ q:["What happens during the battle?",
+    "Who comes to help Roz, and why do they risk themselves?",
+    "What is the bravest moment in these chapters?"],
+ act:"Draw the most exciting moment from the battle."},
+{id:19,ch:"Chapters 73–76",title:"Roz's Big Choice",
+ words:[{w:"sacrifice",d:"to give up something you love for the good of someone else"},
+        {w:"choice",d:"a decision you make between two or more things"},
+        {w:"brave",d:"ready to do something difficult or scary because it is right"}],
+ q:["What big choice does Roz make?",
+    "Why is it called a sacrifice?",
+    "Would you make the same choice — why or why not?"],
+ act:"Talk about a time you gave something up to help someone else."},
+{id:20,ch:"Chapters 77–80",title:"A New Beginning",
+ words:[{w:"hope",d:"a feeling that something good will happen in the future"},
+        {w:"remember",d:"to keep something in your mind so you do not forget it"},
+        {w:"promise",d:"a very serious agreement to do something"}],
+ q:["How does the story end — is it the ending you expected?",
+    "How did Roz change from the very first chapter to the very last?",
+    "What is the most important thing YOU will remember about this book?"],
+ act:"Draw your favourite moment from the whole story. Then maybe start The Wild Robot Escapes! 🚀"}
 ];
-const MILESTONES = {4:"🌱 Getting Started",8:"🪺 Halfway Hero",12:"🍂 Winter Survivor",16:"🤖 Wild Robot Champion"};
 
-let state = { name:"", completed:{} };
-let openId = 1;
+let state={name:"",completed:{}};
+let openId=1;
 
 function load(){
-  try { const raw = localStorage.getItem(STORE_KEY); if(raw){ const d=JSON.parse(raw); state.name=d.name||""; state.completed=d.completed||{}; } } catch(e){}
-  const first = SESSIONS.find(s=>!state.completed[s.id]); openId = first?first.id:null;
+  try{const r=localStorage.getItem(STORE);if(r){const d=JSON.parse(r);state.name=d.name||"";state.completed=d.completed||{};}}catch(e){}
+  const first=SESSIONS.find(s=>!state.completed[s.id]);openId=first?first.id:null;
 }
-function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){} }
-
-function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+function save(){try{localStorage.setItem(STORE,JSON.stringify(state));}catch(e){}}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));}
 
 function renderProgress(){
-  const done = Object.keys(state.completed).length;
-  const pct = Math.round(done/SESSIONS.length*100);
-  document.getElementById("count").textContent = done+" of "+SESSIONS.length+" adventures";
-  document.getElementById("pct").textContent = pct+"%";
-  document.getElementById("barfill").style.width = pct+"%";
-  document.getElementById("badges").innerHTML = Object.entries(MILESTONES)
-    .map(([n,l])=>'<span class="badge'+(done>=+n?" on":"")+'">'+l+'</span>').join("");
+  const done=Object.keys(state.completed).length;
+  const pct=Math.round(done/SESSIONS.length*100);
+  document.getElementById("count").textContent=done+" of "+SESSIONS.length+" nights";
+  document.getElementById("pct").textContent=pct+"%";
+  document.getElementById("barfill").style.width=pct+"%";
+  document.getElementById("badges").innerHTML=Object.entries(MILESTONES)
+    .map(([n,l])=>"<span class=\"badge"+(done>=+n?" on":"")+"\">" +l+"</span>").join("");
 }
 function renderTitle(){
-  document.getElementById("title").textContent = "The Wild Robot" + (state.name? ": "+state.name+"'s Adventure":"");
+  document.getElementById("title").textContent="The Wild Robot"+(state.name?": "+state.name+"\u2019s Adventure":"");
 }
 function renderSessions(){
-  const box = document.getElementById("sessions");
-  box.innerHTML = SESSIONS.map(s=>{
-    const done = state.completed[s.id]!=null;
-    const open = openId===s.id;
-    const stars = state.completed[s.id]||0;
-    let html = '<div class="sess'+(done?" done":"")+'">';
-    html += '<div class="sess-head" data-toggle="'+s.id+'">';
-    html += '<div class="num">'+(done?"✓":s.id)+'</div>';
-    html += '<div class="meta"><div class="t">'+esc(s.title)+'</div><div class="c">'+s.ch+(done?" · "+"⭐".repeat(stars):"")+'</div></div>';
-    html += '<div class="caret">'+(open?"▲":"▼")+'</div></div>';
+  const box=document.getElementById("sessions");
+  box.innerHTML=SESSIONS.map(s=>{
+    const done=state.completed[s.id]!=null;
+    const open=openId===s.id;
+    const stars=state.completed[s.id]||0;
+    let h="<div class=\"sess"+(done?" done":"")+"\">";
+    h+="<div class=\"sess-head\" data-toggle=\""+s.id+"\">";
+    h+="<div class=\"num\">"+(done?"✓":s.id)+"</div>";
+    h+="<div class=\"meta\"><div class=\"t\">"+esc(s.title)+"</div>";
+    h+="<div class=\"c\">"+s.ch+(done?" · "+"⭐".repeat(stars):"")+"</div></div>";
+    h+="<div class=\"caret\">"+(open?"▲":"▼")+"</div></div>";
     if(open){
-      html += '<div class="body">';
-      html += '<div class="label">Talk about it</div>';
-      html += s.q.map(q=>'<div class="q">'+esc(q)+'</div>').join("");
-      html += '<div class="label">Word of the night</div><span class="word">'+esc(s.word)+'</span>';
-      html += '<div class="label">Tiny activity</div><div class="act">✨ '+esc(s.act)+'</div>';
-      html += '<div class="mark"><span>'+(done?"How was it?":"Finished? Tap the stars!")+'</span>';
-      for(let n=1;n<=3;n++) html += '<button class="star'+(stars>=n?" lit":"")+'" data-star="'+s.id+'" data-n="'+n+'">⭐</button>';
-      if(done) html += '<button class="undo" data-undo="'+s.id+'">Not yet</button>';
-      html += '</div></div>';
+      h+="<div class=\"body\">";
+      h+="<div class=\"label\">Talk about it 💬</div>";
+      h+=s.q.map(q=>"<div class=\"q\">"+esc(q)+"</div>").join("");
+      h+="<div class=\"label\">Words of the night ✨</div>";
+      h+="<div class=\"words\">"+s.words.map(w=>
+        "<div class=\"wcard\"><div class=\"w\">"+esc(w.w)+"</div><div class=\"d\">"+esc(w.d)+"</div></div>"
+      ).join("")+"</div>";
+      h+="<div class=\"label\">Tonight\u2019s activity 🎨</div>";
+      h+="<div class=\"act\">"+esc(s.act)+"</div>";
+      h+="<div class=\"mark\"><span>"+(done?"How was tonight?":"Finished? Give it stars!")+"</span>";
+      for(let n=1;n<=3;n++)h+="<button class=\"star"+(stars>=n?" lit":"")+"\" data-star=\""+s.id+"\" data-n=\""+n+"\">⭐</button>";
+      if(done)h+="<button class=\"undo\" data-undo=\""+s.id+"\">Not yet</button>";
+      h+="</div></div>";
     }
-    html += '</div>';
-    return html;
+    h+="</div>";
+    return h;
   }).join("");
 }
-function renderAll(){ renderTitle(); renderProgress(); renderSessions(); }
+function renderAll(){renderTitle();renderProgress();renderSessions();}
 
-document.addEventListener("click", e=>{
-  const t = e.target.closest("[data-toggle]");
-  if(t){ const id=+t.dataset.toggle; openId = openId===id?null:id; renderSessions(); return; }
-  const st = e.target.closest("[data-star]");
-  if(st){ const id=+st.dataset.star, n=+st.dataset.n; state.completed[id]=n; save();
-    const idx=SESSIONS.findIndex(s=>s.id===id); const next=SESSIONS.slice(idx+1).find(s=>!state.completed[s.id]);
-    openId = next?next.id:null; renderAll(); return; }
-  const u = e.target.closest("[data-undo]");
-  if(u){ delete state.completed[+u.dataset.undo]; save(); renderAll(); return; }
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-toggle]");
+  if(t){const id=+t.dataset.toggle;openId=openId===id?null:id;renderSessions();return;}
+  const st=e.target.closest("[data-star]");
+  if(st){
+    const id=+st.dataset.star,n=+st.dataset.n;
+    state.completed[id]=n;save();
+    const idx=SESSIONS.findIndex(s=>s.id===id);
+    const next=SESSIONS.slice(idx+1).find(s=>!state.completed[s.id]);
+    openId=next?next.id:null;renderAll();return;
+  }
+  const u=e.target.closest("[data-undo]");
+  if(u){delete state.completed[+u.dataset.undo];save();renderAll();return;}
 });
-document.getElementById("name").addEventListener("input", e=>{ state.name=e.target.value; save(); renderTitle(); });
-document.getElementById("reset").addEventListener("click", ()=>{ state.completed={}; save(); openId=1; renderAll(); });
+document.getElementById("name").addEventListener("input",e=>{state.name=e.target.value;save();renderTitle();});
+document.getElementById("reset").addEventListener("click",()=>{state.completed={};save();openId=1;renderAll();});
 
 load();
-document.getElementById("name").value = state.name;
+document.getElementById("name").value=state.name;
 renderAll();
 </script>
 </body>
