@@ -210,46 +210,64 @@ function hlWord(idx){
 function speak(text){
   if(!("speechSynthesis" in window))return;
   stopSpeak();
+  var RATE=0.82;
   var words=text.split(/\s+/);
   var u=new SpeechSynthesisUtterance(text);
-  u.rate=0.82;u.pitch=1.05;
+  u.rate=RATE;u.pitch=1.05;
   var vv=window.speechSynthesis.getVoices();
   var nv=vv.find(function(v){return/female|samantha|karen|moira|tessa/i.test(v.name);})||
          vv.find(function(v){return v.lang&&v.lang.startsWith("en");});
   if(nv)u.voice=nv;
 
   var boundaryWorking=false;
-  var timer=null;
+  var timers=[];
 
-  function startFallbackTimer(){
-    /* Estimate ~450ms per word at rate 0.82 — works on mobile where
-       onboundary never fires (iOS Safari, many Android browsers) */
-    var msPerWord=Math.round(450/u.rate);
-    var wi=0;
-    timer=setInterval(function(){
-      if(!S.speaking||wi>=words.length){clearInterval(timer);return;}
-      if(!boundaryWorking)hlWord(wi);
-      wi++;
-    },msPerWord);
+  function scheduleWords(){
+    /*  Per-word timing based on character length so short words ("I","a")
+        and long words ("rainbow","elephant") stay in sync on mobile.
+        msPerChar ≈ 75ms at rate 1.0 → divide by RATE for slower speech.
+        Add a fixed gap between words (~55ms) and a small startup offset.  */
+    var msPerChar=Math.round(75/RATE);
+    var wordGap=Math.round(55/RATE);
+    var startOffset=160; /* brief pause before TTS utters first word */
+    var cumMs=startOffset;
+    words.forEach(function(word,i){
+      var clean=word.replace(/[^a-zA-Z0-9]/g,"");
+      var dur=(clean.length||1)*msPerChar+wordGap;
+      (function(idx,delay){
+        timers.push(setTimeout(function(){
+          if(S.speaking&&!boundaryWorking)hlWord(idx);
+        },delay));
+      }(i,cumMs));
+      cumMs+=dur;
+    });
   }
 
-  u.onstart=function(){S.speaking=true;render();startFallbackTimer();};
+  u.onstart=function(){S.speaking=true;render();scheduleWords();};
 
   u.onboundary=function(e){
+    /* Desktop browsers fire this accurately — cancel all timers and
+       use the real boundary events instead.                          */
+    if(!boundaryWorking){
+      boundaryWorking=true;
+      timers.forEach(function(t){clearTimeout(t);});
+      timers=[];
+    }
     if(e.charIndex==null)return;
-    boundaryWorking=true;          /* desktop — cancel timer, use accurate events */
-    clearInterval(timer);
     var idx=text.slice(0,e.charIndex).split(/\s+/).filter(Boolean).length;
     hlWord(idx);
   };
 
   u.onend=function(){
-    clearInterval(timer);
+    timers.forEach(function(t){clearTimeout(t);});
     document.querySelectorAll(".word.on").forEach(function(el){el.classList.remove("on");});
     S.speaking=false;render();
   };
 
-  u.onerror=function(){clearInterval(timer);S.speaking=false;render();};
+  u.onerror=function(){
+    timers.forEach(function(t){clearTimeout(t);});
+    S.speaking=false;render();
+  };
   window.speechSynthesis.speak(u);
 }
 
