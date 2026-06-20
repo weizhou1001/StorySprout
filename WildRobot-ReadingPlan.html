@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Wild Robot — Reading Adventure</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  --paper:#FFF8EC; --ink:#2C3A3F; --robot:#5E8B9E; --leaf:#4FB477; --sun:#FFC34D;
+  --coral:#FF7A59; --mist:#E7F0F2;
+  font-family:'Nunito','Segoe UI',system-ui,sans-serif; color:var(--ink); min-height:100vh; padding:24px 16px 56px;
+  background:
+    radial-gradient(1100px 480px at 85% -12%, #DCEBE6 0%, transparent 60%),
+    radial-gradient(900px 480px at -10% 112%, #FBE6CF 0%, transparent 55%), var(--paper);
+}
+.wrap { max-width:740px; margin:0 auto; }
+.hero { text-align:center; }
+.robot { font-size:52px; }
+.title { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:32px; line-height:1.1; margin-top:6px; }
+.by { font-weight:700; opacity:.55; font-size:15px; }
+.chips { display:flex; gap:8px; justify-content:center; flex-wrap:wrap; margin:14px 0 20px; }
+.chip { background:#fff; border-radius:999px; padding:6px 13px; font-size:13px; font-weight:800; box-shadow:0 3px 0 rgba(44,58,63,.07); }
+.namewrap { display:flex; justify-content:center; margin-bottom:18px; }
+.namewrap input { border:3px solid #EADFC9; border-radius:14px; padding:10px 14px; font-family:'Nunito',sans-serif; font-weight:700; font-size:15px; text-align:center; }
+.namewrap input:focus { outline:none; border-color:var(--robot); }
+.card { background:#fff; border-radius:22px; padding:18px; box-shadow:0 8px 0 rgba(44,58,63,.07); margin-bottom:16px; }
+.card h3 { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:18px; margin-bottom:10px; }
+.steps { display:grid; gap:8px; }
+.step { display:flex; gap:10px; align-items:flex-start; font-weight:600; font-size:15px; }
+.step b { font-family:'Baloo 2',sans-serif; }
+.prog { background:#fff; border-radius:18px; padding:14px 16px; box-shadow:0 6px 0 rgba(44,58,63,.07); margin-bottom:18px; }
+.prog-top { display:flex; justify-content:space-between; align-items:center; font-family:'Baloo 2',sans-serif; font-weight:800; margin-bottom:10px; }
+.bar { height:14px; background:#EAF1F2; border-radius:999px; overflow:hidden; }
+.bar > div { height:100%; background:linear-gradient(90deg,var(--leaf),var(--sun)); transition:width .4s; }
+.badges { display:flex; gap:8px; flex-wrap:wrap; margin-top:12px; }
+.badge { font-size:12px; font-weight:800; padding:5px 10px; border-radius:999px; background:#EEE; color:#999; }
+.badge.on { background:#FFF2D6; color:#B7791F; }
+.sess { background:#fff; border-radius:20px; box-shadow:0 6px 0 rgba(44,58,63,.07); margin-bottom:12px; overflow:hidden; border:3px solid #fff; }
+.sess.done { border-color:var(--leaf); }
+.sess-head { display:flex; align-items:center; gap:12px; padding:15px 16px; cursor:pointer; }
+.num { width:38px; height:38px; flex:none; border-radius:12px; background:var(--mist); color:var(--robot); font-family:'Baloo 2',sans-serif; font-weight:800; font-size:18px; display:flex; align-items:center; justify-content:center; }
+.sess.done .num { background:var(--leaf); color:#fff; }
+.meta { flex:1; min-width:0; }
+.meta .t { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:18px; }
+.meta .c { font-weight:700; font-size:13px; opacity:.55; }
+.caret { font-size:13px; opacity:.4; }
+.body { padding:0 16px 16px; }
+.label { font-family:'Baloo 2',sans-serif; font-weight:800; font-size:14px; text-transform:uppercase; letter-spacing:.5px; color:var(--robot); margin:14px 0 6px; }
+.q { font-weight:700; font-size:15px; line-height:1.5; margin-bottom:7px; padding-left:18px; position:relative; }
+.q:before { content:"💬"; position:absolute; left:0; font-size:13px; }
+.word { display:inline-block; background:#FFF2D6; color:#B7791F; font-weight:800; padding:5px 12px; border-radius:10px; font-size:15px; }
+.act { font-weight:600; font-size:15px; background:var(--mist); padding:12px 14px; border-radius:12px; line-height:1.45; }
+.mark { margin-top:16px; display:flex; align-items:center; gap:10px; flex-wrap:wrap; }
+.mark span { font-family:'Baloo 2',sans-serif; font-weight:700; font-size:15px; }
+.star { font-size:30px; cursor:pointer; background:none; border:none; line-height:1; filter:grayscale(1) opacity(.4); transition:.12s; }
+.star.lit { filter:none; transform:scale(1.05); }
+.undo { margin-left:auto; border:none; background:#F3EEE3; color:var(--ink); font-family:'Baloo 2',sans-serif; font-weight:700; border-radius:10px; padding:7px 12px; cursor:pointer; font-size:13px; }
+.reset { display:block; margin:26px auto 0; border:none; background:none; color:#B9AE99; font-weight:700; font-size:13px; cursor:pointer; text-decoration:underline; }
+.note { text-align:center; font-size:12px; color:#B9AE99; font-weight:700; margin-top:16px; line-height:1.5; }
+@media print { .reset, .caret { display:none; } .sess .body { display:block !important; } body { background:#fff; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero">
+    <div class="robot">🤖🌿</div>
+    <div class="title" id="title">The Wild Robot</div>
+    <div class="by">A reading adventure by Peter Brown</div>
+  </div>
+  <div class="chips">
+    <span class="chip">📖 80 short chapters</span>
+    <span class="chip">🎯 Grades 3–7</span>
+    <span class="chip">⏱ ~4 weeks</span>
+    <span class="chip">🔊 Great read-aloud</span>
+  </div>
+  <div class="namewrap"><input id="name" placeholder="Type your name to start…" maxlength="20"></div>
+
+  <div class="card">
+    <h3>How each reading night works 🌙</h3>
+    <div class="steps">
+      <div class="step"><span>🔊</span><div><b>Listen.</b> A grown-up reads tonight's chapters aloud.</div></div>
+      <div class="step"><span>📖</span><div><b>Your turn.</b> You read a favorite page back out loud.</div></div>
+      <div class="step"><span>💬</span><div><b>Talk about it.</b> Answer the questions together — no wrong answers.</div></div>
+      <div class="step"><span>✨</span><div><b>Word + activity.</b> Learn one new word and do the tiny activity.</div></div>
+      <div class="step"><span>⭐</span><div><b>Mark it.</b> Give the night stars and unlock the next adventure.</div></div>
+    </div>
+  </div>
+
+  <div class="prog">
+    <div class="prog-top"><span id="count">0 of 16 adventures</span><span id="pct">0%</span></div>
+    <div class="bar"><div id="barfill" style="width:0%"></div></div>
+    <div class="badges" id="badges"></div>
+  </div>
+
+  <div id="sessions"></div>
+
+  <button class="reset" id="reset">Start the adventure over</button>
+  <p class="note">
+    Chapter ranges are a suggested pace — read faster or slower to suit your reader.<br>
+    Made for a book your family owns. The questions and activities are original; the book's own words stay in the book. 📚
+  </p>
+</div>
+
+<script>
+const STORE_KEY = "wildrobot:progress";
+const SESSIONS = [
+  {id:1,ch:"Chapters 1–5",title:"Waking up alone",word:"survive",
+   q:["Roz wakes up all alone in a strange place. Have you ever felt lost or unsure what to do?","Why do you think the animals are afraid of Roz at first?","What is one thing Roz does to try to stay safe?"],
+   act:"Draw the wild island the way you picture it in your head."},
+  {id:2,ch:"Chapters 6–10",title:"Learning the island",word:"instinct",
+   q:["Roz watches the animals very carefully. Why is watching a good way to learn?","What's something Roz figures out just by paying attention?","If you woke up somewhere brand new, what would you want to learn first?"],
+   act:"Watch a real animal (a pet or a bird outside) for two minutes, then tell someone what it did."},
+  {id:3,ch:"Chapters 11–15",title:"Talking with the animals",word:"communicate",
+   q:["How do things change for Roz once she can talk with the animals?","Why do you think the animals start to trust her a little more?","If you could understand one animal's language, which would you pick?"],
+   act:"Invent three hand signals so you can 'talk' to someone without saying a word."},
+  {id:4,ch:"Chapters 16–20",title:"An accident and a lonely egg",word:"responsibility",
+   q:["Accidents happen even when we don't mean them. How does Roz handle a big mistake?","Why does that one lonely egg matter so much?","What would you do if you found something small that needed taking care of?"],
+   act:"Take care of one small thing today — water a plant or feed a pet — and notice how it feels."},
+  {id:5,ch:"Chapters 21–25",title:"A new little one",word:"adopt",
+   q:["A baby goose decides Roz is its mother! How do you think Roz feels about that?","What are some things a good parent or caregiver does?","Who takes care of you, and how do they show it?"],
+   act:"Draw Roz and her gosling together."},
+  {id:6,ch:"Chapters 26–30",title:"Learning to be a parent",word:"patient",
+   q:["Roz isn't sure how to be a mom at first. How does she learn?","What's something hard that you got better at by trying again and again?","Why is it okay not to be perfect at something new?"],
+   act:"Try something tricky three times tonight — and don't give up."},
+  {id:7,ch:"Chapters 31–35",title:"Building a home",word:"shelter",
+   q:["What makes a place feel like 'home'?","How does Roz make the island feel safer and cozier?","Where is your favorite cozy spot at home?"],
+   act:"Build a little fort or a cozy reading nook to read tonight's chapters in."},
+  {id:8,ch:"Chapters 36–40",title:"Friends on the island",word:"community",
+   q:["Roz becomes friends with very different animals. Why is it good to have different kinds of friends?","Which animal friend would you most want, and why?","What's one way you make a new friend?"],
+   act:"Do one kind thing for a friend or a brother or sister today."},
+  {id:9,ch:"Chapters 41–45",title:"Learning to fly",word:"courage",
+   q:["Brightbill has to learn something scary and important. How does Roz help him?","Was there something scary you learned to do, like riding a bike or swimming?","Why do we sometimes have to do scary things to grow?"],
+   act:"Flap your arms and 'fly' around the room like a goose learning to take off."},
+  {id:10,ch:"Chapters 46–50",title:"Growing up",word:"independent",
+   q:["Brightbill is getting bigger and braver. How do you think that makes Roz feel?","What can you do now that you couldn't do when you were little?","Why is growing up exciting AND a little bit sad?"],
+   act:"Do one whole task all by yourself today, start to finish."},
+  {id:11,ch:"Chapters 51–55",title:"The big journey",word:"migrate",
+   q:["The geese must fly far away for winter. Why is that hard for Roz and Brightbill?","Have you ever had to say goodbye to someone for a while?","How can you stay close to someone even when they're far away?"],
+   act:"Trace a long journey across a map or a drawing with your finger."},
+  {id:12,ch:"Chapters 56–60",title:"Surviving the winter",word:"endure",
+   q:["Winter is dangerous on the island. How do the animals help each other through it?","When has someone helped you during a hard time?","Why is helping each other so important?"],
+   act:"Wrap up in a warm blanket and imagine how cold the island feels."},
+  {id:13,ch:"Chapters 61–65",title:"The whole island together",word:"belong",
+   q:["So many animals come together now. How have things changed since chapter 1?","Roz was once feared, and now she matters to everyone. How did that happen?","How do you think Roz has changed on the inside?"],
+   act:"Name three ways Roz is different now from the very first chapter."},
+  {id:14,ch:"Chapters 66–70",title:"Something is coming",word:"predict",
+   q:["The story starts to feel tense. What are you worried might happen?","What does Brightbill mean to Roz by now?","Make a prediction: what do you think happens next?"],
+   act:"Say or write down your prediction, then check it after you finish."},
+  {id:15,ch:"Chapters 71–75",title:"Visitors arrive",word:"protect",
+   q:["Unexpected visitors come to the island. How do Roz and the animals react?","Why do you think the animals want to protect Roz?","What would you do to protect someone you love?"],
+   act:"Talk about who you would protect, and why."},
+  {id:16,ch:"Chapters 76–80",title:"Roz's brave choice",word:"sacrifice",
+   q:["Roz makes a big, brave decision at the end. What do you think of her choice?","How did the island change Roz? And how did Roz change the island?","If you could ask Roz one question, what would it be?"],
+   act:"Draw your favorite moment from the whole book — then maybe start The Wild Robot Escapes!"}
+];
+const MILESTONES = {4:"🌱 Getting Started",8:"🪺 Halfway Hero",12:"🍂 Winter Survivor",16:"🤖 Wild Robot Champion"};
+
+let state = { name:"", completed:{} };
+let openId = 1;
+
+function load(){
+  try { const raw = localStorage.getItem(STORE_KEY); if(raw){ const d=JSON.parse(raw); state.name=d.name||""; state.completed=d.completed||{}; } } catch(e){}
+  const first = SESSIONS.find(s=>!state.completed[s.id]); openId = first?first.id:null;
+}
+function save(){ try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); } catch(e){} }
+
+function esc(s){ return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
+
+function renderProgress(){
+  const done = Object.keys(state.completed).length;
+  const pct = Math.round(done/SESSIONS.length*100);
+  document.getElementById("count").textContent = done+" of "+SESSIONS.length+" adventures";
+  document.getElementById("pct").textContent = pct+"%";
+  document.getElementById("barfill").style.width = pct+"%";
+  document.getElementById("badges").innerHTML = Object.entries(MILESTONES)
+    .map(([n,l])=>'<span class="badge'+(done>=+n?" on":"")+'">'+l+'</span>').join("");
+}
+function renderTitle(){
+  document.getElementById("title").textContent = "The Wild Robot" + (state.name? ": "+state.name+"'s Adventure":"");
+}
+function renderSessions(){
+  const box = document.getElementById("sessions");
+  box.innerHTML = SESSIONS.map(s=>{
+    const done = state.completed[s.id]!=null;
+    const open = openId===s.id;
+    const stars = state.completed[s.id]||0;
+    let html = '<div class="sess'+(done?" done":"")+'">';
+    html += '<div class="sess-head" data-toggle="'+s.id+'">';
+    html += '<div class="num">'+(done?"✓":s.id)+'</div>';
+    html += '<div class="meta"><div class="t">'+esc(s.title)+'</div><div class="c">'+s.ch+(done?" · "+"⭐".repeat(stars):"")+'</div></div>';
+    html += '<div class="caret">'+(open?"▲":"▼")+'</div></div>';
+    if(open){
+      html += '<div class="body">';
+      html += '<div class="label">Talk about it</div>';
+      html += s.q.map(q=>'<div class="q">'+esc(q)+'</div>').join("");
+      html += '<div class="label">Word of the night</div><span class="word">'+esc(s.word)+'</span>';
+      html += '<div class="label">Tiny activity</div><div class="act">✨ '+esc(s.act)+'</div>';
+      html += '<div class="mark"><span>'+(done?"How was it?":"Finished? Tap the stars!")+'</span>';
+      for(let n=1;n<=3;n++) html += '<button class="star'+(stars>=n?" lit":"")+'" data-star="'+s.id+'" data-n="'+n+'">⭐</button>';
+      if(done) html += '<button class="undo" data-undo="'+s.id+'">Not yet</button>';
+      html += '</div></div>';
+    }
+    html += '</div>';
+    return html;
+  }).join("");
+}
+function renderAll(){ renderTitle(); renderProgress(); renderSessions(); }
+
+document.addEventListener("click", e=>{
+  const t = e.target.closest("[data-toggle]");
+  if(t){ const id=+t.dataset.toggle; openId = openId===id?null:id; renderSessions(); return; }
+  const st = e.target.closest("[data-star]");
+  if(st){ const id=+st.dataset.star, n=+st.dataset.n; state.completed[id]=n; save();
+    const idx=SESSIONS.findIndex(s=>s.id===id); const next=SESSIONS.slice(idx+1).find(s=>!state.completed[s.id]);
+    openId = next?next.id:null; renderAll(); return; }
+  const u = e.target.closest("[data-undo]");
+  if(u){ delete state.completed[+u.dataset.undo]; save(); renderAll(); return; }
+});
+document.getElementById("name").addEventListener("input", e=>{ state.name=e.target.value; save(); renderTitle(); });
+document.getElementById("reset").addEventListener("click", ()=>{ state.completed={}; save(); openId=1; renderAll(); });
+
+load();
+document.getElementById("name").value = state.name;
+renderAll();
+</script>
+</body>
+</html>
